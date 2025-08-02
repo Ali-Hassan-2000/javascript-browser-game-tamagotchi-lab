@@ -12,22 +12,29 @@
 // 7) Create reset functionality.
 */
 /*-------------------------------- Constants --------------------------------*/
-const state = ['boredom' = 0, 'hunger' = 0, 'sleepiness' = 0];
+/* state Obj */
+const state = {
+    boredom: 0,
+    hunger: 0,
+    sleepiness: 0
+};
 
 /*---------------------------- Variables (state) ----------------------------*/
 let timer = 0;
 let gameOver = 0;
 
 /*------------------------ Cached Element References ------------------------*/
+/* game states */
 const boredomStatEl = document.querySelector('#boredom-stat');
 const hungerStatEl = document.querySelector('#hunger-stat'); 
 const sleepinessStatEl = document.querySelector('#sleepiness-stat');
-
+/* button elements */
 const playEl = document.querySelector('#play'); 
 const feedEl = document.querySelector('#feed'); 
 const sleepEl = document.querySelector('#sleep'); 
-
+/* game’s status message */
 const gameMessageEl = document.querySelector('#message');
+/* play again button */
 const resetBtnEl = document.querySelector('#restart');
 
 console.log(boredomStatEl);
@@ -39,9 +46,46 @@ console.log(sleepEl);
 console.log(gameMessageEl);
 console.log(resetBtnEl);
 /*-------------------------------- Functions --------------------------------*/
+/* game state initialized function */
+const init = () => {
+    gameOver = false;
+    timer = setInterval(runGame, 2000); /* runs the rungame function every 2 sec.*/
+};
 
+/* function to display message and states */ 
+const runGame = () => {
+    console.log('the game is running!');
+    updateStates();
+    checkGameOver();
+    render();
+};
 
+/* display the state array */
+const render = () => {
+    boredomStatEl.textContent = state.boredom;
+    hungerStatEl.textContent = state.hunger;
+    sleepinessStatEl.textContent = state.sleepiness;
 
+    /* if the game is over then stop the (timer in init) function so that it stops rungame function */
+    if (gameOver === true){ 
+        clearInterval(timer) /* stop the time in the varible*/
+    }
+};
+
+/* function to update the state array automatically */
+const updateStates = () => {
+    Object.keys(state).forEach(i => { state[i] += Math.floor(Math.random() * 4);});
+};
+
+/* function to check if all states >= 10 to set gameOver = true */
+const checkGameOver = () => {
+    gameOver = true; /* set it to ture first and then if one of states is less than 10 set it to false*/
+    Object.keys(state).forEach(i => { 
+        if (state[i] < 10){
+            gameOver = false;
+        }
+    });
+};
 /*----------------------------- Event Listeners -----------------------------*/
 
-
+init()
