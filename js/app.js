@@ -18,11 +18,9 @@ const state = {
     hunger: 0,
     sleepiness: 0
 };
-
 /*---------------------------- Variables (state) ----------------------------*/
 let timer = 0;
 let gameOver = 0;
-
 /*------------------------ Cached Element References ------------------------*/
 /* game states */
 const boredomStatEl = document.querySelector('#boredom-stat');
@@ -69,6 +67,10 @@ const render = () => {
     /* if the game is over then stop the (timer in init) function so that it stops rungame function */
     if (gameOver === true){ 
         clearInterval(timer) /* stop the time in the varible*/
+
+        /* to remove the hidden that we did in css and show the button and p after the game is ended*/ 
+        resetBtnEl.style.visibility = 'visible';
+        gameMessageEl.style.visibility = 'visible';
     }
 };
 
@@ -86,6 +88,29 @@ const checkGameOver = () => {
         }
     });
 };
-/*----------------------------- Event Listeners -----------------------------*/
 
+/* this function will be used in event lestiner. it will reset the boredom and update the states*/
+const playBtnClick = (event) => {
+    if (event.target.id === 'play'){
+        state.boredom = 0;
+    }
+    if (event.target.id === 'feed'){
+        state.hunger = 0;
+    }
+    if(event.target.id === 'sleep'){
+        state.sleepiness = 0;
+    }
+    
+    render();
+};
+/*----------------------------- Event Listeners -----------------------------*/
+/* this event lestiner will take the user button to use the playBtnClick function */
+playEl.addEventListener('click', playBtnClick);
+feedEl.addEventListener('click', playBtnClick);
+sleepEl.addEventListener('click', playBtnClick);
+
+
+
+
+/* */
 init()
