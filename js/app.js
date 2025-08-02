@@ -46,6 +46,14 @@ console.log(resetBtnEl);
 /*-------------------------------- Functions --------------------------------*/
 /* game state initialized function */
 const init = () => {
+    /* if remove the hidden that we did in css and show the button and p after the game is ended*/
+    resetBtnEl.style.visibility = 'hidden';
+    gameMessageEl.style.visibility = 'hidden';
+    
+    /* Set the value of each stat property in state to 0. */
+    Object.keys(state).forEach(i => { state[i] = 0;});
+    render();
+
     gameOver = false;
     timer = setInterval(runGame, 2000); /* runs the rungame function every 2 sec.*/
 };
@@ -109,8 +117,6 @@ playEl.addEventListener('click', playBtnClick);
 feedEl.addEventListener('click', playBtnClick);
 sleepEl.addEventListener('click', playBtnClick);
 
+resetBtnEl.addEventListener('click', init);
 
-
-
-/* */
 init()
